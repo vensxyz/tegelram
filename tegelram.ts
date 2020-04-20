@@ -1,7 +1,18 @@
 import { 
-    IUpdate, IGetUpdatesParams, IResponse, ISetWebhookParams, IWebhookInfo
+    IUpdate, 
+    IGetUpdatesParams, 
+    IResponse, 
+    ISetWebhookParams, 
+    IWebhookInfo, 
+    IUser, 
+    IMessage, 
+    ISendMessageParams,
+    IForwardMessageParams,
+    ISendPhotoParams,
+    ISendAudioParams
 } from "./types.ts";
 
+// Vanilla Tegelram
 class Tegelram {
 
     private botToken: string;
@@ -21,37 +32,45 @@ class Tegelram {
     }
 
     public async getUpdates(getUpdateParams: IGetUpdatesParams): Promise<IResponse<IUpdate[]>> {
-        const result: IResponse<IUpdate[]> = await this.makeRequest<IUpdate[]>("getUpdates", getUpdateParams);
+        const result: IResponse<IUpdate[]> = await this.makeRequest<IUpdate[]>("getUpdates", getUpdateParams) as IResponse<IUpdate[]>;
         return result;
+
+        // TODO: Try the following
+        // return await this.makeRequest<IUpdate[]>("getUpdates", getUpdateParams) as IResponse<IUpdate[]>;
     }
     public async setWebhook(setWebhookParams: ISetWebhookParams): Promise<IResponse<any>> {
-        const result: IResponse<any> = await this.makeRequest("setWebhook", setWebhookParams);
+        const result: IResponse<any> = await this.makeRequest<any>("setWebhook", setWebhookParams) as IResponse<IUpdate[]>;
         return result;
     }
     public async deleteWebhook(): Promise<IResponse<any>> {
-        const result: IResponse<any> = await this.makeRequest("deleteWebhook");
+        const result: IResponse<any> = await this.makeRequest<any>("deleteWebhook");
         return result;
     }
     public async getWebhookInfo(): Promise<IResponse<IWebhookInfo>> {
-        const result: IResponse<IWebhookInfo> = await this.makeRequest("getWebhookInfo");
+        const result: IResponse<IWebhookInfo> = await this.makeRequest<IWebhookInfo>("getWebhookInfo") as IResponse<IWebhookInfo>;
         return result;
     }
 
     // available methods
-    public async getMe() {
-
+    public async getMe(): Promise<IResponse<IUser>> {
+        const result: IResponse<IUser> = await this.makeRequest<IUser>("getMe") as IResponse<IUser>;
+        return result;
     }
-    public async sendMessage() {
-
+    public async sendMessage(sendMessageParams: ISendMessageParams): Promise<IResponse<IMessage>> {
+        const result: IResponse<IMessage> = await this.makeRequest<IMessage>("sendMessage", sendMessageParams) as IResponse<IMessage>;
+        return result;
     }
-    public async forwardMessage() {
-        
+    public async forwardMessage(forwardMessageParams: IForwardMessageParams) {
+        const result: IResponse<IMessage> = await this.makeRequest<IMessage>("forwardMessage", forwardMessageParams) as IResponse<IMessage>;
+        return result;
     }
-    public async sendPhoto() {
-        
+    public async sendPhoto(sendPhotoParamas: ISendPhotoParams) {
+        const result: IResponse<IMessage> = await this.makeRequest<IMessage>("sendPhoto", sendPhotoParamas) as IResponse<IMessage>;
+        return result;
     }
-    public async sendAudio() {
-        
+    public async sendAudio(sendAudioParams: ISendAudioParams) {
+        const result: IResponse<IMessage> = await this.makeRequest<IMessage>("sendAudio", sendAudioParams) as IResponse<IMessage>;
+        return result;
     }
     public async sendDocument() {
         
